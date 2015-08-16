@@ -159,15 +159,25 @@ char** lush_splitline(char *line)
 	return tokens;
 }
 
+
+#define PATHNAMESIZE 64
 int lush_launch(char **args)
 {
 	pid_t pid, wpid;
 	int status;
+	char pathname[PATHNAMESIZE] = "/bin/";
 
 	pid = fork();
 	if(pid == 0)
 	{
 		// in child process
+		// check for exist
+		if((access(args[0], X_OK) == -1) && (access((strcat(pathname, args[0])), X_OK) == -1))
+		{
+			printf("Cannot execute your command.\n");
+			exit(EXIT_SUCCESS);
+		}
+		
 		if(execvp(args[0], args) == -1)   //replace with a new process 
 			perror("lush");
 		exit(EXIT_FAILURE);

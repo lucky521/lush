@@ -9,14 +9,15 @@ $ gcc main.c builtin.c -o lush
 ## Run
 $ ./lush
 
-zip -r luckyshell.zip ./luckyshell/
 
 
+##ref
 
-ref:
+[Advanced Programming in the UNIX Environment](http://www.apuebook.com/)
+
 [starter](http://stephen-brennan.com/2015/01/16/write-a-shell-in-c/)
 
-[getch](https://gist.github.com/ionutvmi/5708845)
+[getch()](https://gist.github.com/ionutvmi/5708845)
 
 
 [handle backspace](http://stackoverflow.com/questions/5723935/echoing-a-backspace)
