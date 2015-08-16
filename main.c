@@ -9,27 +9,25 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-
-
 // builtin
 #include "builtin.h"
-
+#include "conio.h"     // provide getch function for linux
 ////////////////////////////////////////////////////////
 void lush_loop(void);
 char* lush_readline(void);
 char** lush_splitline(char *line);
 int lush_launch(char **args);
 int lush_exe(char **args);
-
 ////////////////////////////////////////////////////////
 int main(int argc , char **argv)
 {
-	//load config files
+	//load config files job
 	//
 
 	lush_loop();
 	
-	// clean and shutdown
+	// clean job and shutdown
+	//
 	//
 	return EXIT_SUCCESS;
 	
@@ -70,16 +68,46 @@ char* lush_readline(void)
 
 	while(1)
 	{
-		c = getchar();
-		if(c==EOF || c =='\n')
+		c = getch();
+		if(c==EOF || c =='\n')  // end of input
 		{
 			buffer[position++] = '\0';
+			printf("\n");
 			return buffer;
+		}
+		else if(c == 8) // backspace
+		{
+			if(position > 0)
+			{
+				printf("\b \b");	
+				position--;
+			}
+		}
+		else if(c>=32 && c<=126) // visible char
+		{
+			buffer[position++] = c;
+			printf("%c", c);
+		}
+		else if(c == '\033') // arrow code
+		{
+			getch(); // skip '['
+			switch(getch())
+			{
+				case 'A': // up
+					break;
+				case 'B': //down
+					break;
+				case 'C': //right
+					break;
+				case 'D': //left
+					break;
+			}
 		}
 		else
 		{
-			buffer[position++] = c;
+
 		}
+
 
 		if(position >= bufsize)
 		{
@@ -98,7 +126,6 @@ char* lush_readline(void)
 
 #define LUSH_TOK_BUFSIZE 64
 #define LUSH_TOK_DELIM " \t\r\n\a"
-
 char** lush_splitline(char *line)
 {
 	int bufsize = LUSH_TOK_BUFSIZE;
@@ -132,8 +159,6 @@ char** lush_splitline(char *line)
 	return tokens;
 }
 
-
-
 int lush_launch(char **args)
 {
 	pid_t pid, wpid;
@@ -143,7 +168,7 @@ int lush_launch(char **args)
 	if(pid == 0)
 	{
 		// in child process
-		if(execvp(args[0], args) == -1)
+		if(execvp(args[0], args) == -1)   //replace with a new process 
 			perror("lush");
 		exit(EXIT_FAILURE);
 
@@ -157,15 +182,15 @@ int lush_launch(char **args)
 	{
 		// in parent process
 		do{
-			wpid = waitpid(pid, &status, WUNTRACED);
+			wpid = waitpid(pid, &status, WUNTRACED); //wait for state changes of child process
 
-		}while(!WIFEXITED(status) && !WIFSIGNALED(status));
+		}while(!WIFEXITED(status) && !WIFSIGNALED(status));//not exit nor terminated by signal
 	}
 	return 1;
 }
 
 
-
+// choose command to execute
 int lush_exe(char **args)
 {
 	int i;
@@ -180,111 +205,6 @@ int lush_exe(char **args)
 	}
 	return lush_launch(args);
 }
-
-
 //////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

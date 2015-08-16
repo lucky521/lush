@@ -1,25 +1,19 @@
+// built-in commands in lush
 
 #include <unistd.h>
 #include <stdio.h>
 
-
 #include "builtin.h"
-/*
-int lush_num_builtins();
-int lush_cd(char **args);
-//int lush_help(char **args);
-int lush_exit(char **agrs);
-*/
 
 char *builtin_str[] = {
 	"cd",
-	//"help",
+	"help",
 	"exit"
 };
 
 int (*builtin_func[])(char**) = {
 	&lush_cd,
-	//&lush_help,
+	&lush_help,
 	&lush_exit
 };
 
@@ -51,3 +45,22 @@ int lush_exit(char **args)
 {
 	return 0;
 }
+
+
+int lush_help(char **args)
+{
+	int i;
+	printf("Lucky's lush\n");
+	printf("Built-in Commands are followed:\n");
+
+	for(i=0;i<lush_num_builtins();i++)
+	{
+		printf("\t%s\n", builtin_str[i]);
+	}	
+	printf("Thank you.\n\n");
+	return 1;
+}
+
+
+
+
