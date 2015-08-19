@@ -1,6 +1,10 @@
 
 ## lush
+Shell is a program that takes what you input on the keyboard and gives them to the OS to perform. The Linux OS have System Calls, but they should be called through GNU C Library. Shell can provide a convenient way to call the System Calls.
 
+lush is a simple implemention of shell.
+
+## Add more to lush
 add DIY commands to builtin.c/h
 
 ## Compile
