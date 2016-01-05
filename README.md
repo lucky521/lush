@@ -1,8 +1,19 @@
 
 ## lush
+
 Shell is a program that takes what you input on the keyboard and gives them to the OS to perform. The Linux OS have System Calls, but they should be called through GNU C Library. Shell can provide a convenient way to call the System Calls.
 
 lush is a simple implemention of shell.
+
+## Linux下Shell终端的简易实现
+
+实现一个Shell，需要实现的功能有：
+
+ - IO交互，以更好的方式读取标准输入，以合适的时机标准输出
+ - 解析输入的数据
+ - 调用操作系统API实现基本功能
+ - 执行自己实现的功能
+ - 处理中断、异常
 
 ## Add more to lush
 add DIY commands to builtin.c/h
@@ -15,7 +26,7 @@ $ ./lush
 
 
 
-##ref
+## Reference
 
 [Advanced Programming in the UNIX Environment](http://www.apuebook.com/)
 
